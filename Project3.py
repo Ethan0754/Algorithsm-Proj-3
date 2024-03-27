@@ -7,6 +7,21 @@ Created on Mon Mar 25 09:04:23 2024
 
 import networkx as nx
 import matplotlib.pyplot as plt
+import collections
+
+class Graph:
+  def __init__(self):
+    self.nodes = set()
+    self.edges = collections.defaultdict(list)
+    self.distances = {}
+
+  def add_node(self, value):
+    self.nodes.add(value)
+
+  def add_edge(self, from_node, to_node, distance):
+    self.edges[from_node].append(to_node)
+    self.edges[to_node].append(from_node)
+    self.distances[(from_node, to_node)] = distance
 
 
 def drawGraph(graph):
@@ -70,9 +85,7 @@ graph1 = {'A': set(['B', 'E', 'F']),
           'M': set(['I', 'N']),
           'N': set(['M']),
           'O': set(['K']),
-          'P': set(['L'])
-
-         }
+          'P': set(['L'])}
 
 print('Nodes of Graph:', graph.nodes())
 print('\nEdges of Graph:', graph.edges())
@@ -81,14 +94,11 @@ drawGraph(graph)
 
 start_point = ['A', 'B','C','D','E','F','G','H','I','J','K','L','M','N','O','P']
 
-'''for i in range (len(start_point)):
-    print('Start Point: ', start_point[i])
-    z = _dfs(graph1, start_point[i])
-    print(z)'''
-
-depthFirst = dfs(graph1, 'H')
-print("DFS: ", depthFirst)
+for i in range (len(start_point)):
+    print ('Start Point: ', start_point[i])
+    depthFirst = dfs(graph1, start_point[i])
+    print(depthFirst)
 
 breadthFirst = bfs(graph1, 'H')
-print ("BFS: ", breadthFirst)
+#print ("BFS: ", breadthFirst)
 
