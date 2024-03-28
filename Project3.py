@@ -101,4 +101,38 @@ for i in range (len(start_point)):
 
 breadthFirst = bfs(graph1, 'H')
 #print ("BFS: ", breadthFirst)
+choice = "n"
+choice = input("Do you want to continue?")
+if(choice == "Y"):
+    
+    graph3 = nx.Graph()
+    graph3.add_nodes_from(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'])
+    graph3.add_edge('A', 'B', weight = 22)
+    graph3.add_edge('A', 'C', weight = 9)
+    graph3.add_edge('A', 'D', weight = 12)
+    graph3.add_edge('B', 'E', weight = 34)
+    graph3.add_edge('B', 'C', weight = 35)
+    graph3.add_edge('B', 'F', weight = 36)
+    graph3.add_edge('C', 'F', weight = 42)
+    graph3.add_edge('C', 'E', weight = 65)
+    graph3.add_edge('C', 'D', weight = 4)
+    graph3.add_edge('D', 'E', weight = 33)
+    graph3.add_edge('D', 'I', weight = 30)
+    graph3.add_edge('E', 'F', weight = 18)
+    graph3.add_edge('E', 'G', weight = 23)
+    graph3.add_edge('F', 'H', weight = 24)
+    graph3.add_edge('F', 'G', weight = 39)
+    graph3.add_edge('G', 'H', weight = 25)
+    graph3.add_edge('G', 'I', weight = 21)
+    graph3.add_edge('H', 'I', weight = 19)
+    drawGraph(graph3)
+    
 
+
+
+
+
+
+
+
+    
