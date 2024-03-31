@@ -25,7 +25,6 @@ class Graph:
 
 
 def drawGraph(graph):
-    
     pos = nx.spring_layout(graph)
     plt.figure()
     nx.draw(
@@ -56,6 +55,34 @@ def bfs(graph, start):
             queue.extend(graph[vertex] - visited)
     return p
 
+def dijkstra(graph, initial):
+  visited = {initial: 0}
+  path = {}
+
+  nodes = set(graph.nodes)
+
+  while nodes: 
+    min_node = None
+    for node in nodes:
+      if node in visited:
+        if min_node is None:
+          min_node = node
+        elif visited[node] < visited[min_node]:
+          min_node = node
+
+    if min_node is None:
+      break
+
+    nodes.remove(min_node)
+    current_weight = visited[min_node]
+
+    for edge in graph.edges[min_node]:
+      weight = current_weight + graph.distance[(min_node, edge)]
+      if edge not in visited or weight < visited[edge]:
+        visited[edge] = weight
+        path[edge] = min_node
+
+  return visited, path
 
 graph = nx.Graph()
 graph.add_nodes_from(['A', 'B','C','D','E','F','G','H','I','J','K','L','M','N','O','P'])
@@ -94,43 +121,69 @@ drawGraph(graph)
 
 start_point = ['A', 'B','C','D','E','F','G','H','I','J','K','L','M','N','O','P']
 
-for i in range (len(start_point)):
+'''for i in range (len(start_point)):
     print ('Start Point: ', start_point[i])
     depthFirst = dfs(graph1, start_point[i])
-    print(depthFirst)
-
-breadthFirst = bfs(graph1, 'H')
-#print ("BFS: ", breadthFirst)
-choice = "n"
-choice = input("Do you want to continue?")
-if(choice == "Y"):
-    
-    graph3 = nx.Graph()
-    graph3.add_nodes_from(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'])
-    graph3.add_edge('A', 'B', weight = 22)
-    graph3.add_edge('A', 'C', weight = 9)
-    graph3.add_edge('A', 'D', weight = 12)
-    graph3.add_edge('B', 'E', weight = 34)
-    graph3.add_edge('B', 'C', weight = 35)
-    graph3.add_edge('B', 'F', weight = 36)
-    graph3.add_edge('C', 'F', weight = 42)
-    graph3.add_edge('C', 'E', weight = 65)
-    graph3.add_edge('C', 'D', weight = 4)
-    graph3.add_edge('D', 'E', weight = 33)
-    graph3.add_edge('D', 'I', weight = 30)
-    graph3.add_edge('E', 'F', weight = 18)
-    graph3.add_edge('E', 'G', weight = 23)
-    graph3.add_edge('F', 'H', weight = 24)
-    graph3.add_edge('F', 'G', weight = 39)
-    graph3.add_edge('G', 'H', weight = 25)
-    graph3.add_edge('G', 'I', weight = 21)
-    graph3.add_edge('H', 'I', weight = 19)
-    drawGraph(graph3)
+    print(depthFirst)'''
     
 
+depthFirst = dfs(graph1, 'A')
+print("DFS: ", depthFirst)
 
 
+for i in range (len(start_point)):
+    breadthFirst = bfs(graph1, start_point[i])
+    print ("BFS: ", breadthFirst)
 
+#-----------------------Dijkstra's Algorithm-------------------------#    
+
+graph3 = nx.Graph()
+graph3.add_nodes_from(['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'])
+graph3.add_edge('A', 'B', weight = 22)
+graph3.add_edge('A', 'C', weight = 9)
+graph3.add_edge('A', 'D', weight = 12)
+graph3.add_edge('B', 'E', weight = 34)
+graph3.add_edge('B', 'C', weight = 35)
+graph3.add_edge('B', 'F', weight = 36)
+graph3.add_edge('C', 'F', weight = 42)
+graph3.add_edge('C', 'E', weight = 65)
+graph3.add_edge('C', 'D', weight = 4)
+graph3.add_edge('D', 'E', weight = 33)
+graph3.add_edge('D', 'I', weight = 30)
+graph3.add_edge('E', 'F', weight = 18)
+graph3.add_edge('E', 'G', weight = 23)
+graph3.add_edge('F', 'H', weight = 24)
+graph3.add_edge('F', 'G', weight = 39)
+graph3.add_edge('G', 'H', weight = 25)
+graph3.add_edge('G', 'I', weight = 21)
+graph3.add_edge('H', 'I', weight = 19)
+drawGraph(graph3)
+    
+dgraph = Graph()
+dgraph.nodes = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'}
+dgraph.edges = {'A': ['B', 'C', 'D'], 'B': ['A', 'E', 'C', 'F'], 
+                'C': ['A', 'B', 'F', 'E', 'D'], 'D': ['E', 'I','C','A'], 
+                'E': ['F', 'G', 'B', 'D', 'C'], 'F': ['H', 'G', 'E', 'C', 'B'], 
+                'G': ['H', 'I','F', 'E'], 'H': ['I', 'G', 'F'], 'I': ['H', 'D', 'G']}
+
+'''dgraph.distance = {('A', 'B'):22, ('A','C'):9, ('A', 'D'):12, ('B', 'E'):34, ('B', 'C'):35,
+                   ('B', 'F'):36, ('C', 'F'):42, ('C', 'E'): 65, ('C', 'D'):4, 
+                   ('D', 'E'):33, ('D', 'I'):30, ('E', 'F'):18, ('E', 'G'): 23,
+                   ('F', 'H'):24, ('F', 'G'):39, ('G', 'H'):25, ('G', 'I'):21, ('H', 'I'):19, ('I', 'H'):19,
+                   ('H', 'G'):25, ('H', 'F'):24}'''
+
+dgraph.distance = {('A', 'B'):22, ('B', 'A'):22, ('A', 'C'): 9, ('C', 'A'):9,('A', 'D'):12, ('D', 'A'):12,
+                   ('B','E'):34, ('E', 'B'):34, ('B', 'C'):35, ('C','B'):35, ('B','F'):36, ('F', 'B'):36,
+                   ('C', 'F'):42, ('F', 'C'):42, ('C', 'E'):65, ('E', 'C'): 65, ('C', 'D'):4, ('D', 'C'):4,
+                   ('D', 'E'):33, ('E','D'):33, ('D', 'I'): 30, ('I', 'D'):30, 
+                   ('E', 'F'):18, ('F','E'):18, ('E', 'G'):23, ('G', 'E'):23, 
+                   ('F','H'):24, ('H','F'):24, ('F','G'):39, ('G','F'):39,
+                   ('G', 'H'):25, ('H', 'G'):25, ('G','I'):21, ('I', 'G'):21,
+                   ('H','I'):19, ('I', 'H'):19}
+
+node_visited, path = dijkstra(dgraph, 'A')
+print('Visited: ', node_visited)
+print('Path :', path)
 
 
 
