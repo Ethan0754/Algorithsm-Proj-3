@@ -246,19 +246,49 @@ def main():
     
     drawGraph(graph)
     
-    #start_point = ['A', 'B','C','D','E','F','G','H','I','J','K','L','M','N','O','P']
-    
-    '''for i in range (len(start_point)):
-        print ('Start Point: ', start_point[i])
-        depthFirst = dfs(graph1, start_point[i])
-        print(depthFirst)'''
-        
+    start_point = ['A', 'B','C','D','E','F','G','H','I','J','K','L','M','N','O','P']
+    start_bool = [False, False, False, False, False, False, False, False,False, False, False, False,False, False, False, False]
     
     depthFirst = dfs(graph1, 'A')
-    print("DFS: ", depthFirst)
-
+    
+    #print (list(depthFirst)[0])
+    
+    for i in range (len(list(depthFirst))):
+        j = 0
+        for j in range (len(start_point)):
+            
+            if start_point[j] == list(depthFirst)[i]: 
+                start_bool[j] = True
+                break
+            
+    for i in range (len(start_bool)):
+        if start_bool[i] == False:
+            depthDC = dfs(graph1, start_point[i])
+            break
+        
+    print (start_bool)
+    print("DFS: ", depthFirst, depthDC)
+    
+#------------------------------------Breadth First----------------------------------------------#
+    
+    start_bool = [False, False, False, False, False, False, False, False,False, False, False, False,False, False, False, False]
     breadthFirst = bfs(graph1, 'A')
-    print ("BFS: ", breadthFirst)
+    
+    for i in range (len(list(breadthFirst))):
+        j = 0
+        for j in range (len(start_point)):
+            
+            if start_point[j] == list(breadthFirst)[i]: 
+                start_bool[j] = True
+                break
+            
+    for i in range (len(start_bool)):
+        if start_bool[i] == False:
+            breadthDC = bfs(graph1, start_point[i])
+            break
+    
+   
+    print ("BFS: ", breadthFirst, breadthDC)
     #-----------------------Dijkstra's Algorithm-------------------------#
 
     print ("\n\n-----------------------Dijkstra's Algorithm-------------------------")    
