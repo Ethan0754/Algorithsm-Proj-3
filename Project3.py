@@ -246,13 +246,13 @@ def main():
     
     drawGraph(graph)
     
+    # Created Parallel Lists
     start_point = ['A', 'B','C','D','E','F','G','H','I','J','K','L','M','N','O','P']
-    start_bool = [False, False, False, False, False, False, False, False,False, False, False, False,False, False, False, False]
+    start_bool = [False, False, False, False, False, False, False, False,False, False, False, False, False, False, False, False]
     
     depthFirst = dfs(graph1, 'A')
     
-    #print (list(depthFirst)[0])
-    
+    # Checks if there are any unvisited nodes, turns all visited nodes to 'True'
     for i in range (len(list(depthFirst))):
         j = 0
         for j in range (len(start_point)):
@@ -261,18 +261,23 @@ def main():
                 start_bool[j] = True
                 break
             
+    ''' Searches through the flag list to see if there are any unvisited nodes, runs DFS on the first unvisited nodes and
+        breaks loop'''
+        
     for i in range (len(start_bool)):
         if start_bool[i] == False:
-            depthDC = dfs(graph1, start_point[i])
+            depthFirstDC = dfs(graph1, start_point[i])
             break
-        
-    print (start_bool)
-    print("DFS: ", depthFirst, depthDC)
+    
+    # Prints the DFS path of the first subgraph followed by the DFS path of the second subgraph
+    print("DFS: ", depthFirst, depthFirstDC)
     
 #------------------------------------Breadth First----------------------------------------------#
     
-    start_bool = [False, False, False, False, False, False, False, False,False, False, False, False,False, False, False, False]
+    # Reset node flags back to false
+    start_bool = [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
     breadthFirst = bfs(graph1, 'A')
+    
     
     for i in range (len(list(breadthFirst))):
         j = 0
@@ -281,14 +286,15 @@ def main():
             if start_point[j] == list(breadthFirst)[i]: 
                 start_bool[j] = True
                 break
-            
+    
     for i in range (len(start_bool)):
         if start_bool[i] == False:
-            breadthDC = bfs(graph1, start_point[i])
+            breadthFirstDC = bfs(graph1, start_point[i])
             break
     
    
-    print ("BFS: ", breadthFirst, breadthDC)
+    print ("BFS: ", breadthFirst, breadthFirstDC)
+    
     #-----------------------Dijkstra's Algorithm-------------------------#
 
     print ("\n\n-----------------------Dijkstra's Algorithm-------------------------")    
@@ -379,7 +385,7 @@ def main():
     dgraph2.add_edges_from([('11', '12')])
     
     
-    graph2 = {'1': set(['3']),
+    graph2 ={'1': set(['3']),
              '2': set(['1']),
              '3': set(['2', '5']),
              '4': set(['1', '2', '12']),
