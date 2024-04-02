@@ -369,7 +369,7 @@ def main():
             x1, x2 = int(x[0]), int(x[1])
             graph[x1].append(x2)'''
             
-    dgraph2 = nx.Graph()
+    dgraph2 = nx.DiGraph()
     dgraph2.add_nodes_from(['1', '2','3','4','5','6','7','8','9','10','11','12'])
     
     dgraph2.add_edges_from([('1', '3')])
@@ -416,8 +416,22 @@ def main():
     for key in groups:
         print(groups[key])
         
-    # print('\n\nQuestion 2B: Meta Graph Diagraph')
+    print('\n\nQuestion 2B: Meta Graph Diagraph')
     # drawGraph(dgraph2)
+    
+    graph2_scc = list(nx.strongly_connected_components(dgraph2))
+    color_map = {}
+    colors = ['blue', 'green', 'pink', 'wheat', 'lightblue', 'lightgreen']
+    for i, component in enumerate(graph2_scc):
+        for node in component:
+            color_map[node] = colors [i % len(colors)]
+            
+    pos = nx.spring_layout(dgraph2)
+    nx.draw_networkx_nodes(dgraph2, pos, node_size=300, node_color=[color_map[node] for node in dgraph2])
+    nx.draw_networkx_edges(dgraph2, pos, edgelist=dgraph2.edges(), edge_color='black')
+    nx.draw_networkx_labels(dgraph2, pos, font_size=10, font_family="sans-serif")
+    
+    plt.show()
     
     n = len(graph2)
     print('\n\nQuestion 2C: Topological order starting from \'1\'')
